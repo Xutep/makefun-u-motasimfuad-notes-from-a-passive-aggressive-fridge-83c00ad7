@@ -17,6 +17,14 @@ NOTE = (
     "You are not hungry. You are just visiting."
 )
 
+# Runtime validation: the note must be a single line of 1-200 characters.
+# This guards the entry contract -- one line, no line breaks -- before
+# anything is written to disk.
+if not (1 <= len(NOTE) <= 200):
+    raise ValueError(f"note must be 1-200 characters, got {len(NOTE)}")
+if "\n" in NOTE or "\r" in NOTE:
+    raise ValueError("note must be exactly one line (no line breaks)")
+
 
 def main() -> None:
     os.makedirs("/output", exist_ok=True)
